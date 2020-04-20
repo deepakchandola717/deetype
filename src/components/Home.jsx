@@ -9,19 +9,31 @@ const Home = (props) => {
 
     const [openTextSelector, setOpenTextSelector] = useState(false);
 
-    const [text, setText] = useState()
+    const [text, setText] = useState();
+    const [time, setTime] = useState('');
 
     const toggleTextSelector=(toggleValue)=>{
         const newTextSelector = toggleValue?toggleValue:!openTextSelector;
         setOpenTextSelector(newTextSelector);
     }
 
+    const controlTimeSelection=(e)=>{
+        let selectedTime = Number(e.target.value)
+        if(selectedTime&&selectedTime<=1000){
+            setTime(selectedTime)
+        }      
+        if(selectedTime===0){
+            setTime()
+        }  
+    }
+
     const goToPlay=()=>{
-        if(text){
+        if(text&&time){
             props.history.push({
                 pathname:'/playground',
                 state:{
-                    text:text
+                    text:text,
+                    time:time
                 }
             })
         }
@@ -44,7 +56,7 @@ const Home = (props) => {
                             <div style={buttonStyle}>choose file</div>
                             <div style={buttonStyle} onClick={toggleTextSelector}>copy-paste text</div>
                             <div style={{display:'flex'}}>
-                                <div style={{height:'2rem', width:'4rem', zIndex:'2', backgroundColor:'#2A2136', border:'solid white 3px', padding:'0.2rem', margin:'1rem'}}></div>
+                                <input type="text" value={time} onChange={controlTimeSelection} style={{height:'2rem', width:'4rem', zIndex:'2', backgroundColor:'#2A2136', border:'solid white 3px', padding:'0.2rem', margin:'1rem', color:'white', fontSize:'30px'}}></input>
                                 <span style={{alignSelf:'center',zIndex:'2'}}>Minutes</span>
                             </div>
                         </div>
