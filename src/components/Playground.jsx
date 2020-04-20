@@ -1,5 +1,6 @@
 import React from 'react';
 import DtTitle from '../assets/dt-title.svg';
+import { Link } from 'react-router-dom';
 
 
 const Playground = (props) => {
@@ -13,7 +14,7 @@ const Playground = (props) => {
         let updatedTypedText = e.target.value.split("")
         let remainingText = [...text]
         remainingText.splice(0,completedText.length+1)
-        if(JSON.stringify([...updatedTypedText, ...remainingText])==JSON.stringify(text)){
+        if(JSON.stringify([...updatedTypedText, ...remainingText])===JSON.stringify(text)){
             setCompletedText(updatedTypedText)
             setTypedText(e.target.value)
             setPendingText(remainingText)
@@ -22,7 +23,7 @@ const Playground = (props) => {
     return ( 
         <>
         <div style={{display:'flex', flexDirection:'column', height:'100vh', width:'100vw', backgroundColor:'#6F4533'}}>
-            <div style={{display:'flex', width:'80%', margin:'auto', justifyContent:'space-between'}}><img style={{height:'3vw'}} src={DtTitle} alt="deeType"/><span>5:00</span></div>
+            <div style={{display:'flex', width:'80%', margin:'auto', justifyContent:'space-between'}}><Link to="/"><img style={{height:'3vw'}} src={DtTitle} alt="deeType"/></Link><span>5:00</span></div>
             <div style={{height:'40vh', width:'80%', margin:'auto', backgroundColor:'white', border:'solid black 1px', color:'grey', textAlign:'start', padding:'0.5rem', overflow:'scroll'}}><span style={{color:'black'}}>{completedText?completedText:''}</span><span style={{borderLeft:'solid black 2px'}}>{pendingText[0]}</span><span>{pendingText.map((elem,index)=>index>0&&elem)}</span></div>
 
             <div style={{ display:'flex', height:'40vh', width:'95%', margin:'auto', justifyContent:'center', alignItems:'center'}}>

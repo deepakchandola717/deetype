@@ -1,24 +1,37 @@
 import React, {useState} from 'react';
-
+import { Link } from 'react-router-dom';
 import TextSelection from "./TextSelection";
 
 import DtTitle from '../assets/dt-title.svg';
 import EnterBackground from '../assets/enter-background.svg';
 
-const Home = () => {
+const Home = (props) => {
 
     const [openTextSelector, setOpenTextSelector] = useState(false);
+
+    const [text, setText] = useState()
 
     const toggleTextSelector=(toggleValue)=>{
         const newTextSelector = toggleValue?toggleValue:!openTextSelector;
         setOpenTextSelector(newTextSelector);
     }
 
+    const goToPlay=()=>{
+        if(text){
+            props.history.push({
+                pathname:'/playground',
+                state:{
+                    text:text
+                }
+            })
+        }
+    }
+
     const buttonStyle={width:'16rem', padding:'0.5vw', margin:'0.4vw',zIndex:'2', backgroundColor:'white', borderRadius:'0.5rem', color:'#1A5261', cursor:'pointer', pointerEvents:openTextSelector&&'none', opacity:openTextSelector&&'0.6'};
 
     return ( 
         <>
-            <TextSelection openSelector={openTextSelector} toggleTextSelector={toggleTextSelector}/>
+            <TextSelection openSelector={openTextSelector} toggleTextSelector={toggleTextSelector} setText={setText}/>
             <div style={{display:'flex', flexDirection:'column', opacity:openTextSelector&&'0.4'}}>
                 <div style={{width:'100vw', height:'20vh', backgroundColor:'#1A5261'}}/>
                 <img style={{position:'absolute', zIndex:'1', top:'18vh', left:'2vw', height:'28vh', width:'94vw'}} src={DtTitle} alt="deeType"/>
@@ -35,7 +48,9 @@ const Home = () => {
                                 <span style={{alignSelf:'center',zIndex:'2'}}>Minutes</span>
                             </div>
                         </div>
-                        <span style={{alignSelf:'center', fontSize:'7vw', margin:'1rem', cursor:'pointer',zIndex:'2', border:'dotted white 2px', padding:'1rem', borderRadius:'1rem'}}>ENTER</span>
+                        {/* <Link to={{pathname:'/playground', state:{text:text}}} style={{textDecoration:'none', color:'white'}}> */}
+                        <span onClick={goToPlay} style={{alignSelf:'center', fontSize:'7vw', margin:'1rem', cursor:'pointer',zIndex:'2', border:'dotted white 2px', padding:'1rem', borderRadius:'1rem'}}>ENTER</span>
+                        {/* </Link> */}
                     </div>
                 </div>
             </div>
