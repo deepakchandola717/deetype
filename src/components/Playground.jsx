@@ -13,10 +13,11 @@ const Playground = (props) => {
         let updatedTypedText = e.target.value.split("")
         let remainingText = [...text]
         remainingText.splice(0,completedText.length+1)
-        
-        setCompletedText(updatedTypedText)
-        setTypedText(e.target.value)
-        setPendingText(remainingText)
+        if(JSON.stringify([...updatedTypedText, ...remainingText])==JSON.stringify(text)){
+            setCompletedText(updatedTypedText)
+            setTypedText(e.target.value)
+            setPendingText(remainingText)
+        }
     }
     return ( 
         <>
